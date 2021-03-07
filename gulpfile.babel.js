@@ -5,7 +5,7 @@ import minifyCSS from "gulp-csso";
 import del from "del";
 import bro from "gulp-browserify";
 import babel from "babelify";
-import minify from "gulp-minify";
+// import minify from "gulp-minify";
 
 sass.compiler = require("node-sass");
 
@@ -46,7 +46,7 @@ const js = () =>
                 ],
             })
         )
-        .pipe(minify())
+        // .pipe(minify())
         .pipe(gulp.dest(paths.js.dest));
 
 const watchFiles = () => {
