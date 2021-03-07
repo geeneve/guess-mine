@@ -6,6 +6,7 @@ let inProgress = false;
 let word = null;
 let leader = null;
 let timeout = null;
+let sec = null;
 
 const chooseLeader = () => sockets[Math.floor(Math.random() * sockets.length)];
 
@@ -26,7 +27,8 @@ const socketController = (socket, io) => {
                     superBroadcast(events.gameStarted);
                     io.to(leader.id).emit(events.leaderNotif, { word });
                     timeout = setTimeout(endGame, 30000);
-                    superBroadcast(events.gameTimer);
+                    sec = Date.now();
+                    superBroadcast(events.gameTimer, { sec });
                 }, 3000);
             }
         }

@@ -13,6 +13,10 @@
     }
     .main {
         margin-right: 200px;
+        .notis__container {
+            display: flex;
+            justify-content: space-between;
+        }
         #jsCanvas {
             width: 700px;
             height: 700px;

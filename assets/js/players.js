@@ -7,6 +7,10 @@ import {
     showControls,
 } from "./paint";
 
+let getSec = null;
+let curSec = null;
+let diffSec = null;
+
 const board = document.getElementById("jsPBoard");
 const notifs = document.getElementById("jsNotifs");
 const timer = document.getElementById("jsTimer");
@@ -25,6 +29,16 @@ const setNotifs = (text) => {
     notifs.innerText = text;
 };
 
+const setTimerNotis = () => {
+    curSec = Date.now();
+    diffSec = ((30000 - (curSec - getSec)) / 1000).toFixed(1);
+    if (diffSec < 0) {
+        timer.innerText = "";
+    } else {
+        timer.innerText = `Time left: ${diffSec}`;
+    }
+};
+
 export const handlePlayerUpdate = ({ sockets }) => addPlayers(sockets);
 export const handleGameStarted = () => {
     setNotifs("");
@@ -35,8 +49,9 @@ export const handleGameStarted = () => {
     enalbeChat();
 };
 
-export const handleGameTimer = () => {
-    timer.innerText = "10sec left";
+export const handleGameTimer = ({ sec }) => {
+    getSec = sec;
+    setInterval(setTimerNotis, 100);
 };
 
 export const handleLeaderNotif = ({ word }) => {
@@ -48,6 +63,7 @@ export const handleLeaderNotif = ({ word }) => {
 
 export const handleGameEnded = () => {
     setNotifs("Game ended.");
+    getSec = 0;
     disalbeCanvas();
     hideControls();
     resetCanvas();
